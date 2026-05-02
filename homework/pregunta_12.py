@@ -22,3 +22,10 @@ def pregunta_12():
     38   38                    eee:0,fff:9,iii:2
     39   39                    ggg:3,hhh:8,jjj:5
     """
+    import pandas as pd
+    df = pd.read_csv('files/input/tbl2.tsv', sep='\t')
+    def agg_func(group):
+        group = group.sort_values('c5a')
+        return ','.join(f'{a}:{b}' for a, b in zip(group.c5a, group.c5b))
+    result = df.groupby('c0').apply(agg_func, include_groups=False).reset_index(name='c5')
+    return result
